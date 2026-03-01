@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
@@ -29,12 +29,12 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero__inner">
-      <p class="hero__eyebrow">Social Media Management Agency</p>
+    <div class="hero__inner container">
+      <p class="hero__eyebrow"><span class="mono">//</span> Social Media Management Agency</p>
       <h1 class="hero__headline">
-        We Help Local Businesses<br />
-        <em>Unearth Their Full Potential</em>
+        We Help Local<br />Businesses Unearth<br />Their Full Potential
       </h1>
+      <div class="hero__rule"></div>
       <p class="hero__sub">
         Whatever you do, the way you tell your story online can make all the difference.
         We go beyond social media management to help you build a brand presence
@@ -42,18 +42,47 @@
       </p>
       <div class="hero__ctas">
         <a href="#contact" class="btn btn--primary">Work With Us</a>
-        <a href="#services" class="btn btn--ghost">Explore Services</a>
+        <a href="#services" class="btn btn--ghost">Explore Services &rarr;</a>
       </div>
     </div>
-    <div class="hero__scroll-indicator" aria-hidden="true">
-      <span></span>
+    <div class="hero__ticker" aria-hidden="true">
+      <div class="hero__ticker-track">
+        <span>Social Media Strategy</span>
+        <span class="sep">&mdash;</span>
+        <span>Paid Advertising</span>
+        <span class="sep">&mdash;</span>
+        <span>Content Design</span>
+        <span class="sep">&mdash;</span>
+        <span>SEO &amp; Keywords</span>
+        <span class="sep">&mdash;</span>
+        <span>AI Marketing</span>
+        <span class="sep">&mdash;</span>
+        <span>Google Ads</span>
+        <span class="sep">&mdash;</span>
+        <span>Custom Solutions</span>
+        <span class="sep">&mdash;</span>
+        <span>Social Media Strategy</span>
+        <span class="sep">&mdash;</span>
+        <span>Paid Advertising</span>
+        <span class="sep">&mdash;</span>
+        <span>Content Design</span>
+        <span class="sep">&mdash;</span>
+        <span>SEO &amp; Keywords</span>
+        <span class="sep">&mdash;</span>
+        <span>AI Marketing</span>
+        <span class="sep">&mdash;</span>
+        <span>Google Ads</span>
+        <span class="sep">&mdash;</span>
+        <span>Custom Solutions</span>
+      </div>
     </div>
   </section>
 
   <!-- INTRO STRIP -->
   <section class="intro-strip">
-    <div class="container">
-      <p>
+    <div class="container intro-strip__inner">
+      <p class="mono intro-strip__label">01 / Mission</p>
+      <p class="intro-strip__text">
         We've helped business owners across Austin effectively convey their value and passion
         by creating a presence that <strong>engages, delights, and persuades</strong> a targeted audience —
         leveraging social media to increase traffic, generate leads, and build a community.
@@ -65,126 +94,144 @@
   <section class="services" id="services">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">What We Do</p>
-        <h2>Connecting Brands With the Right Audiences</h2>
+        <p class="section-eyebrow mono">02 / Services</p>
+        <h2>Connecting Brands<br />With the Right Audiences</h2>
         <p class="section-sub">
           Through strategic social media management, targeted advertising, and comprehensive
           digital marketing solutions, we don't just build followers — we build communities
-          of engaged customers.
+          of engaged customers. Every strategy is designed to amplify your brand's unique voice.
         </p>
       </div>
 
-      <div class="services__grid">
+      <div class="services__list">
 
-        <div class="service-card">
-          <div class="service-card__icon">01</div>
-          <h3>Social Media Strategy &amp; Growth</h3>
-          <p>
-            Complete social media strategy development and execution focused on sustainable growth.
-            We analyze your current presence, identify your ideal audience, and create engaging
-            content that drives meaningful interactions across all platforms.
-          </p>
+        <div class="service-row">
+          <div class="service-row__num mono">01</div>
+          <div class="service-row__content">
+            <h3>Social Media Strategy &amp; Growth</h3>
+            <p>
+              Complete social media strategy development and execution focused on sustainable growth.
+              We analyze your current presence, identify your ideal audience, and create engaging
+              content that drives meaningful interactions across all platforms.
+            </p>
+          </div>
+          <div class="service-row__arrow">&rarr;</div>
         </div>
 
-        <div class="service-card">
-          <div class="service-card__icon">02</div>
-          <h3>Paid Advertising &amp; Sales Funnels</h3>
-          <p>
-            Strategic paid advertising campaigns that convert browsers into buyers. We design
-            and manage targeted ad campaigns while building optimized sales funnels that guide
-            your audience seamlessly from discovery to purchase.
-          </p>
+        <div class="service-row">
+          <div class="service-row__num mono">02</div>
+          <div class="service-row__content">
+            <h3>Paid Advertising &amp; Sales Funnels</h3>
+            <p>
+              Strategic paid advertising campaigns that convert browsers into buyers. We design
+              and manage targeted ad campaigns while building optimized sales funnels that guide
+              your audience seamlessly from discovery to purchase.
+            </p>
+          </div>
+          <div class="service-row__arrow">&rarr;</div>
         </div>
 
-        <div class="service-card">
-          <div class="service-card__icon">03</div>
-          <h3>Content Design</h3>
-          <p>
-            Our design team creates custom graphics, carousels, and visual storytelling that
-            perfectly represents your brand's voice and aesthetic — while driving your
-            audience to take action.
-          </p>
+        <div class="service-row">
+          <div class="service-row__num mono">03</div>
+          <div class="service-row__content">
+            <h3>Content Design</h3>
+            <p>
+              Our design team creates custom graphics, carousels, and visual storytelling that
+              perfectly represents your brand's voice and aesthetic — while driving your
+              audience to take action.
+            </p>
+          </div>
+          <div class="service-row__arrow">&rarr;</div>
         </div>
 
-        <div class="service-card">
-          <div class="service-card__icon">04</div>
-          <h3>SEO &amp; Keyword Research</h3>
-          <p>
-            Data-driven keyword research that puts your content in front of people actively
-            searching for what you offer. We identify high-impact keywords and optimize your
-            content strategy to improve organic visibility and search rankings.
-          </p>
+        <div class="service-row">
+          <div class="service-row__num mono">04</div>
+          <div class="service-row__content">
+            <h3>SEO &amp; Keyword Research</h3>
+            <p>
+              Data-driven keyword research that puts your content in front of people actively
+              searching for what you offer. We identify high-impact keywords and optimize your
+              content strategy to improve organic visibility and search rankings.
+            </p>
+          </div>
+          <div class="service-row__arrow">&rarr;</div>
         </div>
 
-        <div class="service-card">
-          <div class="service-card__icon">05</div>
-          <h3>AI Marketing Solutions</h3>
-          <p>
-            Cutting-edge AI solutions that streamline your marketing efforts and enhance
-            customer experience — from intelligent chatbots to automated content creation
-            and advanced analytics that keep you ahead of the curve.
-          </p>
+        <div class="service-row">
+          <div class="service-row__num mono">05</div>
+          <div class="service-row__content">
+            <h3>AI Marketing Solutions</h3>
+            <p>
+              Cutting-edge AI solutions that streamline your marketing efforts and enhance
+              customer experience — from intelligent chatbots to automated content creation
+              and advanced analytics that keep you ahead of the curve.
+            </p>
+          </div>
+          <div class="service-row__arrow">&rarr;</div>
         </div>
 
-        <div class="service-card">
-          <div class="service-card__icon">06</div>
-          <h3>Google Ads</h3>
-          <p>
-            Precision-targeted Google Ads campaigns that maximize your advertising budget.
-            We create, monitor, and optimize search and display campaigns to reach the right
-            people at exactly the right moment.
-          </p>
+        <div class="service-row">
+          <div class="service-row__num mono">06</div>
+          <div class="service-row__content">
+            <h3>Google Ads</h3>
+            <p>
+              Precision-targeted Google Ads campaigns that maximize your advertising budget.
+              We create, monitor, and optimize search and display campaigns to reach the right
+              people at exactly the right moment.
+            </p>
+          </div>
+          <div class="service-row__arrow">&rarr;</div>
         </div>
 
       </div>
 
       <div class="services__custom">
-        <div class="services__custom-inner">
-          <h3>Need Something Different?</h3>
-          <p>
-            We don't limit you to rigid packages. Instead, we create custom solutions based
-            on the specific services your business actually needs.
-          </p>
-          <a href="#contact" class="btn btn--primary">Let's Talk</a>
-        </div>
+        <p class="mono services__custom-label">Custom Solutions</p>
+        <p>
+          We don't limit you to rigid packages. We create custom solutions based on the specific
+          services your business actually needs — nothing more, nothing less.
+        </p>
+        <a href="#contact" class="btn btn--primary">Start a Conversation</a>
       </div>
     </div>
   </section>
 
   <!-- ABOUT -->
   <section class="about" id="about">
-    <div class="container about__inner">
-      <div class="about__text">
-        <p class="section-eyebrow">About Us</p>
-        <h2>Built for Local Businesses.<br />Rooted in Austin.</h2>
-        <p>
-          ASAP Studios was founded with one mission: to help local businesses — especially
-          Austin's vibrant restaurant scene — show up online the way they show up in person.
-          Bold, real, and impossible to ignore.
-        </p>
-        <p>
-          Every strategy we implement is designed to amplify your brand's unique voice and
-          expand your reach. We're passionate about the businesses that make Austin what it is,
-          and we bring that same energy to every campaign we run.
-        </p>
-        <a href="#contact" class="btn btn--primary">Meet the Team</a>
-      </div>
-      <div class="about__visual" aria-hidden="true">
-        <div class="about__visual-block">
-          <span class="about__stat">100+</span>
-          <span class="about__stat-label">Brands Grown</span>
+    <div class="container">
+      <p class="section-eyebrow mono">03 / About</p>
+      <div class="about__inner">
+        <div class="about__text">
+          <h2>Built for Local Businesses.<br />Rooted in Austin.</h2>
+          <p>
+            ASAP Studios was founded with one mission: to help local businesses — especially
+            Austin's vibrant restaurant scene — show up online the way they show up in person.
+            Bold, real, and impossible to ignore.
+          </p>
+          <p>
+            Every strategy we implement is designed to amplify your brand's unique voice and
+            expand your reach. We're passionate about the businesses that make Austin what it is,
+            and we bring that same energy to every campaign we run.
+          </p>
+          <a href="#contact" class="btn btn--primary">Work With Us</a>
         </div>
-        <div class="about__visual-block">
-          <span class="about__stat">Austin</span>
-          <span class="about__stat-label">Texas Based</span>
-        </div>
-        <div class="about__visual-block">
-          <span class="about__stat">Full</span>
-          <span class="about__stat-label">Service Agency</span>
-        </div>
-        <div class="about__visual-block">
-          <span class="about__stat">Real</span>
-          <span class="about__stat-label">Results Driven</span>
+        <div class="about__stats">
+          <div class="stat-block">
+            <span class="stat-block__num mono">100+</span>
+            <span class="stat-block__label">Brands Grown</span>
+          </div>
+          <div class="stat-block">
+            <span class="stat-block__num mono">Austin</span>
+            <span class="stat-block__label">Texas Based</span>
+          </div>
+          <div class="stat-block">
+            <span class="stat-block__num mono">Full</span>
+            <span class="stat-block__label">Service Agency</span>
+          </div>
+          <div class="stat-block">
+            <span class="stat-block__num mono">Real</span>
+            <span class="stat-block__label">Results Driven</span>
+          </div>
         </div>
       </div>
     </div>
@@ -193,6 +240,7 @@
   <!-- PHILOSOPHY QUOTE -->
   <section class="quote">
     <div class="container">
+      <p class="mono quote__label">// Philosophy</p>
       <blockquote>
         "Whatever you do, the way you tell your story online can make all the difference."
       </blockquote>
@@ -201,10 +249,10 @@
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
-    <div class="container contact__inner">
+    <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Get In Touch</p>
-        <h2>Ready to Grow Your Brand?</h2>
+        <p class="section-eyebrow mono">04 / Contact</p>
+        <h2>Ready to Grow<br />Your Brand?</h2>
         <p class="section-sub">
           Tell us about your business and what you're looking to achieve.
           We'll put together a custom plan built around your goals.
@@ -242,8 +290,8 @@
           <label for="message">Tell us about your goals</label>
           <textarea id="message" name="message" rows="5" placeholder="What are you looking to achieve? Who is your audience? Any details help..."></textarea>
         </div>
-        <button type="submit" class="btn btn--primary btn--full">Send Message</button>
-        <p class="form-note">We typically respond within 1 business day.</p>
+        <button type="submit" class="btn btn--primary">Send Message</button>
+        <p class="form-note mono">// We typically respond within 1 business day.</p>
       </form>
     </div>
   </section>
@@ -257,7 +305,7 @@
       </div>
       <nav class="footer__nav">
         <div class="footer__col">
-          <h4>Services</h4>
+          <h4 class="mono">Services</h4>
           <a href="#services">Social Media Strategy</a>
           <a href="#services">Paid Advertising</a>
           <a href="#services">Content Design</a>
@@ -266,14 +314,15 @@
           <a href="#services">Google Ads</a>
         </div>
         <div class="footer__col">
-          <h4>Company</h4>
+          <h4 class="mono">Company</h4>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </div>
       </nav>
     </div>
     <div class="footer__bottom">
-      <p>&copy; 2026 ASAP Studios. All rights reserved.</p>
+      <p class="mono">&copy; 2026 ASAP Studios</p>
+      <p class="mono footer__bottom-right">Austin, TX</p>
     </div>
   </footer>
 
@@ -286,7 +335,7 @@
       hamburger.classList.toggle('active');
     });
 
-    // Sticky nav shadow on scroll
+    // Sticky nav border on scroll
     const nav = document.querySelector('.nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('nav--scrolled', window.scrollY > 20);
@@ -302,11 +351,11 @@
       });
     });
 
-    // Form submit handler (placeholder)
+    // Form submit handler
     function handleSubmit(e) {
       e.preventDefault();
       const btn = e.target.querySelector('button[type="submit"]');
-      btn.textContent = 'Message Sent!';
+      btn.textContent = 'Message Sent.';
       btn.disabled = true;
       setTimeout(() => {
         btn.textContent = 'Send Message';
@@ -315,16 +364,13 @@
       }, 3000);
     }
 
-    // Intersection Observer for fade-in animations
+    // Fade-in on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.service-card, .about__visual-block, .section-header').forEach(el => {
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.service-row, .stat-block, .section-header').forEach(el => {
       el.classList.add('fade-in');
       observer.observe(el);
     });
