@@ -212,40 +212,19 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   overflow: hidden;
 }
 
-/* ── Video / animated background ── */
+/* ── Canvas animated background ── */
 .hero__bg {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
-.hero__video {
+.hero__canvas {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  opacity: 0.35;
-}
-/* CSS-animated fallback when no video src is provided */
-.hero__bg-fallback {
-  position: absolute;
-  inset: -20%;
-  width: 140%;
-  height: 140%;
-  background:
-    radial-gradient(ellipse at 20% 50%, var(--espresso) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(218,161,2,0.08) 0%, transparent 40%),
-    radial-gradient(ellipse at 60% 80%, rgba(110,166,125,0.06) 0%, transparent 40%),
-    linear-gradient(135deg, var(--near-black) 0%, #1a1510 25%, var(--near-black) 50%, #12110e 75%, var(--near-black) 100%);
-  background-size: 100% 100%;
-  animation: heroPan 25s ease-in-out infinite alternate;
-}
-@keyframes heroPan {
-  0%   { transform: translate(0, 0) scale(1); }
-  25%  { transform: translate(-3%, 2%) scale(1.04); }
-  50%  { transform: translate(2%, -1%) scale(1.02); }
-  75%  { transform: translate(-1%, -2%) scale(1.05); }
-  100% { transform: translate(1%, 1%) scale(1); }
+  display: block;
 }
 
 /* Film grain overlay */

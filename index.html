@@ -29,17 +29,9 @@
 
   <!-- HERO -->
   <section class="hero">
-    <!-- Founders Fund-style video background -->
+    <!-- Animated advertising history montage -->
     <div class="hero__bg">
-      <!--
-        Replace the src below with your own Mad Men-era video file.
-        Recommended: 15-30s loop, 1080p, MP4 + WebM, muted autoplay.
-        Example: <source src="assets/hero-bg.mp4" type="video/mp4" />
-      -->
-      <video class="hero__video" autoplay muted loop playsinline>
-        <!-- Add your video source here -->
-      </video>
-      <div class="hero__bg-fallback" aria-hidden="true"></div>
+      <canvas class="hero__canvas" aria-hidden="true"></canvas>
       <div class="hero__grain" aria-hidden="true"></div>
       <div class="hero__overlay"></div>
     </div>
@@ -388,6 +380,524 @@
       el.classList.add('fade-in');
       observer.observe(el);
     });
+
+    // ================================================================
+    // HERO CANVAS — Animated history of advertising montage
+    // ================================================================
+    (function () {
+      const canvas = document.querySelector('.hero__canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H, dpr;
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = canvas.parentElement.offsetWidth;
+        H = canvas.parentElement.offsetHeight;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      // Brand palette
+      const GOLD = '#DAA102';
+      const TAUPE = '#736B60';
+      const CREAM = '#F1DFCA';
+      const SAGE = '#6EA67D';
+      const DIM = '#555555';
+
+      // Advertising eras
+      const eras = [
+        {
+          year: '1704',
+          title: 'The First Newspaper Ad',
+          sub: 'Boston News-Letter',
+          desc: 'Print advertising is born',
+          draw: drawNewspaper,
+        },
+        {
+          year: '1843',
+          title: 'The Ad Agency Is Born',
+          sub: 'Volney Palmer — Philadelphia',
+          desc: 'The first advertising agency opens',
+          draw: drawAgency,
+        },
+        {
+          year: '1922',
+          title: 'Radio Changes Everything',
+          sub: 'WEAF New York — First paid broadcast',
+          desc: 'Advertising enters the living room',
+          draw: drawRadio,
+        },
+        {
+          year: '1941',
+          title: 'Television Arrives',
+          sub: 'Bulova Watch Co. — First TV commercial',
+          desc: '$9 for 10 seconds of airtime',
+          draw: drawTV,
+        },
+        {
+          year: '1962',
+          title: 'The Creative Revolution',
+          sub: 'Madison Avenue — The Golden Age',
+          desc: 'Advertising becomes an art form',
+          draw: drawMadMen,
+        },
+        {
+          year: '1984',
+          title: 'The Super Bowl Ad',
+          sub: 'Apple Macintosh — "Why 1984 won\'t be like 1984"',
+          desc: 'One ad changes the game forever',
+          draw: drawSuperBowl,
+        },
+        {
+          year: '2004',
+          title: 'The Digital Revolution',
+          sub: 'Google AdWords — Facebook Ads',
+          desc: 'From broadcast to targeted',
+          draw: drawDigital,
+        },
+        {
+          year: 'Now',
+          title: 'Social Media & Beyond',
+          sub: 'ASAP Studios — Austin, TX',
+          desc: 'Your story. Amplified.',
+          draw: drawNow,
+        },
+      ];
+
+      const ERA_DURATION = 5000; // ms per era
+      const FADE_DURATION = 1200;
+      let startTime = performance.now();
+
+      // Floating particles per era
+      let particles = [];
+      function seedParticles(n) {
+        particles = [];
+        for (let i = 0; i < n; i++) {
+          particles.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.2,
+            size: Math.random() * 2 + 0.5,
+            alpha: Math.random() * 0.3 + 0.05,
+          });
+        }
+      }
+      seedParticles(60);
+
+      function updateParticles() {
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = W;
+          if (p.x > W) p.x = 0;
+          if (p.y < 0) p.y = H;
+          if (p.y > H) p.y = 0;
+        }
+      }
+
+      function drawParticles(color) {
+        for (const p of particles) {
+          ctx.globalAlpha = p.alpha;
+          ctx.fillStyle = color;
+          ctx.fillRect(p.x, p.y, p.size, p.size);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      // ---- Era-specific drawing functions ----
+
+      function drawNewspaper(t, alpha) {
+        ctx.globalAlpha = alpha * 0.12;
+        ctx.strokeStyle = CREAM;
+        ctx.lineWidth = 0.5;
+        // Newspaper column lines
+        const cols = 5;
+        const colW = W / cols;
+        for (let i = 1; i < cols; i++) {
+          const x = i * colW + Math.sin(t * 0.5 + i) * 8;
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, H);
+          ctx.stroke();
+        }
+        // Faux text lines
+        ctx.globalAlpha = alpha * 0.06;
+        for (let row = 0; row < 30; row++) {
+          for (let col = 0; col < cols; col++) {
+            const y = row * 28 + 40 + Math.sin(t + col) * 3;
+            const x = col * colW + 15;
+            const w = colW * (0.5 + Math.random() * 0.4) - 30;
+            ctx.fillStyle = CREAM;
+            ctx.fillRect(x, y, w, 2);
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawAgency(t, alpha) {
+        ctx.globalAlpha = alpha * 0.08;
+        ctx.strokeStyle = TAUPE;
+        ctx.lineWidth = 1;
+        // Architectural grid
+        for (let i = 0; i < 8; i++) {
+          const y = (H / 8) * i + Math.sin(t * 0.3 + i * 0.7) * 10;
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(W, y);
+          ctx.stroke();
+        }
+        for (let i = 0; i < 6; i++) {
+          const x = (W / 6) * i + Math.cos(t * 0.3 + i * 0.5) * 10;
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, H);
+          ctx.stroke();
+        }
+        // Door/window rectangles
+        ctx.globalAlpha = alpha * 0.05;
+        ctx.fillStyle = GOLD;
+        for (let i = 0; i < 4; i++) {
+          const x = W * 0.15 + i * W * 0.2;
+          const y = H * 0.3 + Math.sin(t * 0.5 + i) * 20;
+          ctx.fillRect(x, y, W * 0.08, H * 0.15);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawRadio(t, alpha) {
+        ctx.globalAlpha = alpha * 0.1;
+        ctx.strokeStyle = GOLD;
+        ctx.lineWidth = 0.8;
+        // Radio waves emanating from center
+        const cx = W * 0.5;
+        const cy = H * 0.55;
+        for (let i = 0; i < 8; i++) {
+          const r = 60 + i * 55 + Math.sin(t * 2 + i) * 15;
+          const startA = -0.6 + Math.sin(t * 0.8 + i * 0.3) * 0.1;
+          const endA = 0.6 + Math.sin(t * 0.8 + i * 0.3) * 0.1;
+          ctx.globalAlpha = alpha * (0.12 - i * 0.012);
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, Math.PI + startA, Math.PI + endA);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, -endA, -startA);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawTV(t, alpha) {
+        ctx.globalAlpha = alpha * 0.07;
+        // TV screen shape
+        const sw = Math.min(W * 0.4, 350);
+        const sh = sw * 0.7;
+        const sx = (W - sw) / 2;
+        const sy = (H - sh) / 2 + 20;
+        ctx.strokeStyle = TAUPE;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(sx, sy, sw, sh);
+        // Scan lines
+        ctx.globalAlpha = alpha * 0.04;
+        ctx.fillStyle = CREAM;
+        for (let y = sy; y < sy + sh; y += 4) {
+          ctx.fillRect(sx, y, sw, 1);
+        }
+        // Static flicker
+        ctx.globalAlpha = alpha * 0.03;
+        for (let i = 0; i < 120; i++) {
+          const x = sx + Math.random() * sw;
+          const y2 = sy + Math.random() * sh;
+          const s = Math.random() * 4 + 1;
+          ctx.fillRect(x, y2, s, s);
+        }
+        // Antenna
+        ctx.globalAlpha = alpha * 0.08;
+        ctx.strokeStyle = TAUPE;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(sx + sw / 2, sy);
+        ctx.lineTo(sx + sw * 0.3, sy - 60 + Math.sin(t) * 5);
+        ctx.moveTo(sx + sw / 2, sy);
+        ctx.lineTo(sx + sw * 0.7, sy - 60 + Math.cos(t) * 5);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+
+      function drawMadMen(t, alpha) {
+        // Cocktail glass / Manhattan skyline silhouette
+        ctx.globalAlpha = alpha * 0.06;
+        ctx.fillStyle = GOLD;
+        // Skyline blocks
+        const buildings = [
+          { x: 0.05, w: 0.06, h: 0.35 },
+          { x: 0.13, w: 0.04, h: 0.45 },
+          { x: 0.19, w: 0.07, h: 0.55 },
+          { x: 0.28, w: 0.05, h: 0.4 },
+          { x: 0.35, w: 0.03, h: 0.65 },
+          { x: 0.40, w: 0.06, h: 0.5 },
+          { x: 0.48, w: 0.04, h: 0.6 },
+          { x: 0.54, w: 0.07, h: 0.45 },
+          { x: 0.63, w: 0.05, h: 0.55 },
+          { x: 0.70, w: 0.04, h: 0.7 },
+          { x: 0.76, w: 0.06, h: 0.5 },
+          { x: 0.84, w: 0.05, h: 0.4 },
+          { x: 0.91, w: 0.07, h: 0.35 },
+        ];
+        for (const b of buildings) {
+          const bx = b.x * W;
+          const bw = b.w * W;
+          const bh = b.h * H * 0.6;
+          const by = H - bh + Math.sin(t * 0.4 + b.x * 10) * 5;
+          ctx.fillRect(bx, by, bw, bh);
+          // Lit windows
+          ctx.globalAlpha = alpha * 0.04;
+          for (let wy = by + 10; wy < H - 10; wy += 18) {
+            for (let wx = bx + 4; wx < bx + bw - 4; wx += 10) {
+              if (Math.random() > 0.4) {
+                ctx.fillStyle = Math.random() > 0.7 ? GOLD : CREAM;
+                ctx.fillRect(wx, wy, 5, 8);
+              }
+            }
+          }
+          ctx.fillStyle = GOLD;
+          ctx.globalAlpha = alpha * 0.06;
+        }
+        // Subtle smoke wisps
+        ctx.globalAlpha = alpha * 0.05;
+        ctx.strokeStyle = TAUPE;
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < 5; i++) {
+          const sx = W * (0.2 + i * 0.15);
+          ctx.beginPath();
+          for (let y = H * 0.7; y > H * 0.1; y -= 5) {
+            const x = sx + Math.sin((y * 0.02) + t + i) * 30;
+            y === H * 0.7 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawSuperBowl(t, alpha) {
+        ctx.globalAlpha = alpha * 0.06;
+        // Stadium arc
+        ctx.strokeStyle = GOLD;
+        ctx.lineWidth = 1.5;
+        for (let i = 0; i < 5; i++) {
+          const r = 200 + i * 60 + Math.sin(t * 0.5 + i) * 10;
+          ctx.globalAlpha = alpha * (0.08 - i * 0.014);
+          ctx.beginPath();
+          ctx.arc(W * 0.5, H * 1.2, r, Math.PI * 1.1, Math.PI * 1.9);
+          ctx.stroke();
+        }
+        // Spotlight beams
+        ctx.globalAlpha = alpha * 0.04;
+        const spots = [0.3, 0.5, 0.7];
+        for (const sx of spots) {
+          ctx.beginPath();
+          ctx.moveTo(sx * W, 0);
+          ctx.lineTo(sx * W - 80 + Math.sin(t + sx * 5) * 30, H);
+          ctx.lineTo(sx * W + 80 + Math.sin(t + sx * 5) * 30, H);
+          ctx.closePath();
+          ctx.fillStyle = GOLD;
+          ctx.fill();
+        }
+        // Field yard lines
+        ctx.globalAlpha = alpha * 0.05;
+        ctx.strokeStyle = SAGE;
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < 10; i++) {
+          const y = H * 0.55 + i * 25;
+          ctx.beginPath();
+          ctx.moveTo(W * 0.2, y);
+          ctx.lineTo(W * 0.8, y);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawDigital(t, alpha) {
+        ctx.globalAlpha = alpha * 0.06;
+        ctx.fillStyle = SAGE;
+        // Binary / data grid
+        ctx.font = '10px "IBM Plex Mono", monospace';
+        const chars = '01001101 CLICK REACH ENGAGE TARGET CONVERT DATA SEARCH';
+        for (let row = 0; row < 20; row++) {
+          for (let col = 0; col < 15; col++) {
+            const x = col * (W / 15) + Math.sin(t * 0.5 + row * 0.5) * 5;
+            const y = row * (H / 18) + 20;
+            ctx.globalAlpha = alpha * (0.03 + Math.sin(t * 2 + row + col) * 0.02);
+            const ci = Math.floor((t * 3 + row + col) % chars.length);
+            ctx.fillText(chars[ci], x, y);
+          }
+        }
+        // Connection lines
+        ctx.globalAlpha = alpha * 0.06;
+        ctx.strokeStyle = GOLD;
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < 12; i++) {
+          const x1 = Math.sin(t * 0.3 + i * 1.1) * W * 0.4 + W * 0.5;
+          const y1 = Math.cos(t * 0.3 + i * 0.7) * H * 0.3 + H * 0.5;
+          const x2 = Math.sin(t * 0.3 + i * 1.1 + 2) * W * 0.4 + W * 0.5;
+          const y2 = Math.cos(t * 0.3 + i * 0.7 + 2) * H * 0.3 + H * 0.5;
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+          ctx.fillStyle = GOLD;
+          ctx.fillRect(x1 - 2, y1 - 2, 4, 4);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function drawNow(t, alpha) {
+        ctx.globalAlpha = alpha * 0.05;
+        // Social nodes
+        const nodes = [];
+        for (let i = 0; i < 20; i++) {
+          const angle = (i / 20) * Math.PI * 2 + t * 0.2;
+          const r = 120 + Math.sin(t * 0.5 + i) * 60;
+          nodes.push({
+            x: W * 0.5 + Math.cos(angle) * r,
+            y: H * 0.5 + Math.sin(angle) * r * 0.6,
+          });
+        }
+        // Connection web
+        ctx.strokeStyle = GOLD;
+        ctx.lineWidth = 0.5;
+        ctx.globalAlpha = alpha * 0.04;
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            if (dx * dx + dy * dy < 40000) {
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+        // Node dots
+        ctx.fillStyle = GOLD;
+        ctx.globalAlpha = alpha * 0.1;
+        for (const n of nodes) {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        // Radiating rings
+        ctx.strokeStyle = SAGE;
+        ctx.globalAlpha = alpha * 0.04;
+        for (let i = 0; i < 4; i++) {
+          const r = 50 + i * 70 + Math.sin(t + i) * 20;
+          ctx.beginPath();
+          ctx.arc(W * 0.5, H * 0.5, r, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      // ---- Main render loop ----
+
+      function render(now) {
+        const elapsed = now - startTime;
+        const totalCycle = ERA_DURATION * eras.length;
+        const cyclePos = elapsed % totalCycle;
+        const eraIndex = Math.floor(cyclePos / ERA_DURATION);
+        const eraProgress = (cyclePos % ERA_DURATION) / ERA_DURATION;
+        const t = elapsed * 0.001; // time in seconds
+
+        ctx.clearRect(0, 0, W, H);
+
+        // Background base
+        ctx.fillStyle = '#050504';
+        ctx.fillRect(0, 0, W, H);
+
+        // Current era
+        const era = eras[eraIndex];
+        const prevEra = eras[(eraIndex - 1 + eras.length) % eras.length];
+
+        // Crossfade logic
+        let fadeIn = 1;
+        let fadeOut = 0;
+        if (eraProgress < FADE_DURATION / ERA_DURATION) {
+          fadeIn = eraProgress / (FADE_DURATION / ERA_DURATION);
+          fadeOut = 1 - fadeIn;
+        }
+
+        // Draw previous era fading out
+        if (fadeOut > 0) prevEra.draw(t, fadeOut * 0.8);
+
+        // Draw current era
+        era.draw(t, fadeIn);
+
+        // Particles
+        updateParticles();
+        drawParticles(TAUPE);
+
+        // ---- Typography overlay ----
+        const textAlpha = fadeIn * (eraProgress < 0.85 ? 1 : (1 - eraProgress) / 0.15);
+
+        // Year — giant monospace
+        ctx.globalAlpha = textAlpha * 0.07;
+        ctx.fillStyle = CREAM;
+        ctx.font = `200 ${Math.min(W * 0.35, 350)}px "IBM Plex Sans", sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(era.year, W * 0.5, H * 0.48);
+
+        // Era title
+        ctx.globalAlpha = textAlpha * 0.14;
+        ctx.fillStyle = CREAM;
+        ctx.font = '300 clamp(18px, 2.5vw, 32px) "IBM Plex Sans", sans-serif';
+        ctx.font = `300 ${Math.min(W * 0.025, 28)}px "IBM Plex Sans", sans-serif`;
+        ctx.fillText(era.title, W * 0.5, H * 0.63);
+
+        // Sub / attribution
+        ctx.globalAlpha = textAlpha * 0.09;
+        ctx.fillStyle = TAUPE;
+        ctx.font = `400 ${Math.min(W * 0.012, 13)}px "IBM Plex Mono", monospace`;
+        ctx.fillText(era.sub, W * 0.5, H * 0.68);
+
+        // Descriptor
+        ctx.globalAlpha = textAlpha * 0.08;
+        ctx.fillStyle = GOLD;
+        ctx.font = `400 ${Math.min(W * 0.01, 11)}px "IBM Plex Mono", monospace`;
+        ctx.letterSpacing = '0.15em';
+        ctx.fillText(era.desc.toUpperCase(), W * 0.5, H * 0.73);
+
+        // Timeline progress bar at bottom
+        ctx.globalAlpha = 0.08;
+        ctx.fillStyle = TAUPE;
+        ctx.fillRect(0, H - 2, W, 2);
+        ctx.fillStyle = GOLD;
+        ctx.globalAlpha = 0.15;
+        ctx.fillRect(0, H - 2, W * ((eraIndex + eraProgress) / eras.length), 2);
+
+        // Era indicator dots
+        ctx.textAlign = 'left';
+        for (let i = 0; i < eras.length; i++) {
+          const dx = W * 0.04 + i * 14;
+          const dy = H - 18;
+          ctx.globalAlpha = i === eraIndex ? 0.25 : 0.06;
+          ctx.fillStyle = i === eraIndex ? GOLD : TAUPE;
+          ctx.fillRect(dx, dy, i === eraIndex ? 8 : 4, 4);
+        }
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(render);
+      }
+
+      requestAnimationFrame(render);
+    })();
   </script>
 
 </body>
