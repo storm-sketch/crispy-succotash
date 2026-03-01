@@ -514,9 +514,9 @@
       // ---- Era-specific drawing functions ----
 
       function drawNewspaper(t, alpha) {
-        ctx.globalAlpha = alpha * 0.4;
+        ctx.globalAlpha = alpha * 0.7;
         ctx.strokeStyle = CREAM;
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 1;
         // Newspaper column lines
         const cols = 5;
         const colW = W / cols;
@@ -528,7 +528,7 @@
           ctx.stroke();
         }
         // Faux text lines
-        ctx.globalAlpha = alpha * 0.2;
+        ctx.globalAlpha = alpha * 0.45;
         for (let row = 0; row < 30; row++) {
           for (let col = 0; col < cols; col++) {
             const y = row * 28 + 40 + Math.sin(t + col) * 3;
@@ -542,9 +542,9 @@
       }
 
       function drawAgency(t, alpha) {
-        ctx.globalAlpha = alpha * 0.3;
+        ctx.globalAlpha = alpha * 0.6;
         ctx.strokeStyle = TAUPE;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1.5;
         // Architectural grid
         for (let i = 0; i < 8; i++) {
           const y = (H / 8) * i + Math.sin(t * 0.3 + i * 0.7) * 10;
@@ -561,7 +561,7 @@
           ctx.stroke();
         }
         // Door/window rectangles
-        ctx.globalAlpha = alpha * 0.2;
+        ctx.globalAlpha = alpha * 0.45;
         ctx.fillStyle = GOLD;
         for (let i = 0; i < 4; i++) {
           const x = W * 0.15 + i * W * 0.2;
@@ -572,9 +572,9 @@
       }
 
       function drawRadio(t, alpha) {
-        ctx.globalAlpha = alpha * 0.35;
+        ctx.globalAlpha = alpha * 0.7;
         ctx.strokeStyle = GOLD;
-        ctx.lineWidth = 1.2;
+        ctx.lineWidth = 2;
         // Radio waves emanating from center
         const cx = W * 0.5;
         const cy = H * 0.55;
@@ -582,7 +582,7 @@
           const r = 60 + i * 55 + Math.sin(t * 2 + i) * 15;
           const startA = -0.6 + Math.sin(t * 0.8 + i * 0.3) * 0.1;
           const endA = 0.6 + Math.sin(t * 0.8 + i * 0.3) * 0.1;
-          ctx.globalAlpha = alpha * (0.4 - i * 0.04);
+          ctx.globalAlpha = alpha * (0.7 - i * 0.06);
           ctx.beginPath();
           ctx.arc(cx, cy, r, Math.PI + startA, Math.PI + endA);
           ctx.stroke();
@@ -594,23 +594,23 @@
       }
 
       function drawTV(t, alpha) {
-        ctx.globalAlpha = alpha * 0.3;
+        ctx.globalAlpha = alpha * 0.6;
         // TV screen shape
         const sw = Math.min(W * 0.4, 350);
         const sh = sw * 0.7;
         const sx = (W - sw) / 2;
         const sy = (H - sh) / 2 + 20;
         ctx.strokeStyle = TAUPE;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
         ctx.strokeRect(sx, sy, sw, sh);
         // Scan lines
-        ctx.globalAlpha = alpha * 0.15;
+        ctx.globalAlpha = alpha * 0.3;
         ctx.fillStyle = CREAM;
         for (let y = sy; y < sy + sh; y += 4) {
           ctx.fillRect(sx, y, sw, 1);
         }
         // Static flicker
-        ctx.globalAlpha = alpha * 0.12;
+        ctx.globalAlpha = alpha * 0.25;
         for (let i = 0; i < 120; i++) {
           const x = sx + Math.random() * sw;
           const y2 = sy + Math.random() * sh;
@@ -618,7 +618,7 @@
           ctx.fillRect(x, y2, s, s);
         }
         // Antenna
-        ctx.globalAlpha = alpha * 0.3;
+        ctx.globalAlpha = alpha * 0.6;
         ctx.strokeStyle = TAUPE;
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -632,7 +632,7 @@
 
       function drawMadMen(t, alpha) {
         // Cocktail glass / Manhattan skyline silhouette
-        ctx.globalAlpha = alpha * 0.25;
+        ctx.globalAlpha = alpha * 0.5;
         ctx.fillStyle = GOLD;
         // Skyline blocks
         const buildings = [
@@ -657,7 +657,7 @@
           const by = H - bh + Math.sin(t * 0.4 + b.x * 10) * 5;
           ctx.fillRect(bx, by, bw, bh);
           // Lit windows
-          ctx.globalAlpha = alpha * 0.15;
+          ctx.globalAlpha = alpha * 0.35;
           for (let wy = by + 10; wy < H - 10; wy += 18) {
             for (let wx = bx + 4; wx < bx + bw - 4; wx += 10) {
               if (Math.random() > 0.4) {
@@ -667,12 +667,12 @@
             }
           }
           ctx.fillStyle = GOLD;
-          ctx.globalAlpha = alpha * 0.25;
+          ctx.globalAlpha = alpha * 0.5;
         }
         // Subtle smoke wisps
-        ctx.globalAlpha = alpha * 0.2;
+        ctx.globalAlpha = alpha * 0.4;
         ctx.strokeStyle = TAUPE;
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 1;
         for (let i = 0; i < 5; i++) {
           const sx = W * (0.2 + i * 0.15);
           ctx.beginPath();
@@ -686,19 +686,19 @@
       }
 
       function drawSuperBowl(t, alpha) {
-        ctx.globalAlpha = alpha * 0.25;
+        ctx.globalAlpha = alpha * 0.5;
         // Stadium arc
         ctx.strokeStyle = GOLD;
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 2.5;
         for (let i = 0; i < 5; i++) {
           const r = 200 + i * 60 + Math.sin(t * 0.5 + i) * 10;
-          ctx.globalAlpha = alpha * (0.3 - i * 0.05);
+          ctx.globalAlpha = alpha * (0.6 - i * 0.08);
           ctx.beginPath();
           ctx.arc(W * 0.5, H * 1.2, r, Math.PI * 1.1, Math.PI * 1.9);
           ctx.stroke();
         }
         // Spotlight beams
-        ctx.globalAlpha = alpha * 0.15;
+        ctx.globalAlpha = alpha * 0.35;
         const spots = [0.3, 0.5, 0.7];
         for (const sx of spots) {
           ctx.beginPath();
@@ -710,9 +710,9 @@
           ctx.fill();
         }
         // Field yard lines
-        ctx.globalAlpha = alpha * 0.2;
+        ctx.globalAlpha = alpha * 0.4;
         ctx.strokeStyle = SAGE;
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 1;
         for (let i = 0; i < 10; i++) {
           const y = H * 0.55 + i * 25;
           ctx.beginPath();
@@ -724,24 +724,24 @@
       }
 
       function drawDigital(t, alpha) {
-        ctx.globalAlpha = alpha * 0.25;
+        ctx.globalAlpha = alpha * 0.5;
         ctx.fillStyle = SAGE;
         // Binary / data grid
-        ctx.font = '10px "IBM Plex Mono", monospace';
+        ctx.font = '12px "IBM Plex Mono", monospace';
         const chars = '01001101 CLICK REACH ENGAGE TARGET CONVERT DATA SEARCH';
         for (let row = 0; row < 20; row++) {
           for (let col = 0; col < 15; col++) {
             const x = col * (W / 15) + Math.sin(t * 0.5 + row * 0.5) * 5;
             const y = row * (H / 18) + 20;
-            ctx.globalAlpha = alpha * (0.12 + Math.sin(t * 2 + row + col) * 0.08);
+            ctx.globalAlpha = alpha * (0.3 + Math.sin(t * 2 + row + col) * 0.15);
             const ci = Math.floor((t * 3 + row + col) % chars.length);
             ctx.fillText(chars[ci], x, y);
           }
         }
         // Connection lines
-        ctx.globalAlpha = alpha * 0.25;
+        ctx.globalAlpha = alpha * 0.5;
         ctx.strokeStyle = GOLD;
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 1;
         for (let i = 0; i < 12; i++) {
           const x1 = Math.sin(t * 0.3 + i * 1.1) * W * 0.4 + W * 0.5;
           const y1 = Math.cos(t * 0.3 + i * 0.7) * H * 0.3 + H * 0.5;
@@ -758,7 +758,7 @@
       }
 
       function drawNow(t, alpha) {
-        ctx.globalAlpha = alpha * 0.2;
+        ctx.globalAlpha = alpha * 0.5;
         // Social nodes
         const nodes = [];
         for (let i = 0; i < 20; i++) {
@@ -771,8 +771,8 @@
         }
         // Connection web
         ctx.strokeStyle = GOLD;
-        ctx.lineWidth = 0.5;
-        ctx.globalAlpha = alpha * 0.15;
+        ctx.lineWidth = 1;
+        ctx.globalAlpha = alpha * 0.35;
         for (let i = 0; i < nodes.length; i++) {
           for (let j = i + 1; j < nodes.length; j++) {
             const dx = nodes[i].x - nodes[j].x;
@@ -787,7 +787,7 @@
         }
         // Node dots
         ctx.fillStyle = GOLD;
-        ctx.globalAlpha = alpha * 0.35;
+        ctx.globalAlpha = alpha * 0.6;
         for (const n of nodes) {
           ctx.beginPath();
           ctx.arc(n.x, n.y, 3, 0, Math.PI * 2);
@@ -795,7 +795,7 @@
         }
         // Radiating rings
         ctx.strokeStyle = SAGE;
-        ctx.globalAlpha = alpha * 0.15;
+        ctx.globalAlpha = alpha * 0.35;
         for (let i = 0; i < 4; i++) {
           const r = 50 + i * 70 + Math.sin(t + i) * 20;
           ctx.beginPath();
@@ -816,10 +816,6 @@
         const t = elapsed * 0.001; // time in seconds
 
         ctx.clearRect(0, 0, W, H);
-
-        // Background base
-        ctx.fillStyle = '#050504';
-        ctx.fillRect(0, 0, W, H);
 
         // Current era
         const era = eras[eraIndex];
@@ -847,7 +843,7 @@
         const textAlpha = fadeIn * (eraProgress < 0.85 ? 1 : (1 - eraProgress) / 0.15);
 
         // Year — giant monospace
-        ctx.globalAlpha = textAlpha * 0.18;
+        ctx.globalAlpha = textAlpha * 0.35;
         ctx.fillStyle = CREAM;
         ctx.font = `200 ${Math.min(W * 0.35, 350)}px "IBM Plex Sans", sans-serif`;
         ctx.textAlign = 'center';
@@ -855,20 +851,19 @@
         ctx.fillText(era.year, W * 0.5, H * 0.48);
 
         // Era title
-        ctx.globalAlpha = textAlpha * 0.4;
+        ctx.globalAlpha = textAlpha * 0.7;
         ctx.fillStyle = CREAM;
-        ctx.font = '300 clamp(18px, 2.5vw, 32px) "IBM Plex Sans", sans-serif';
         ctx.font = `300 ${Math.min(W * 0.025, 28)}px "IBM Plex Sans", sans-serif`;
         ctx.fillText(era.title, W * 0.5, H * 0.63);
 
         // Sub / attribution
-        ctx.globalAlpha = textAlpha * 0.3;
+        ctx.globalAlpha = textAlpha * 0.55;
         ctx.fillStyle = TAUPE;
         ctx.font = `400 ${Math.min(W * 0.012, 13)}px "IBM Plex Mono", monospace`;
         ctx.fillText(era.sub, W * 0.5, H * 0.68);
 
         // Descriptor
-        ctx.globalAlpha = textAlpha * 0.25;
+        ctx.globalAlpha = textAlpha * 0.5;
         ctx.fillStyle = GOLD;
         ctx.font = `400 ${Math.min(W * 0.01, 11)}px "IBM Plex Mono", monospace`;
         ctx.letterSpacing = '0.15em';
