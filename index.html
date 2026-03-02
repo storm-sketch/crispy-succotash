@@ -473,6 +473,15 @@
       const ERA_DURATION = 5000; // ms per era
       const FADE_DURATION = 1200;
       let startTime = performance.now();
+      let hiddenAt = null;
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          hiddenAt = performance.now();
+        } else if (hiddenAt !== null) {
+          startTime += performance.now() - hiddenAt;
+          hiddenAt = null;
+        }
+      });
 
       // Floating particles per era
       let particles = [];
@@ -808,6 +817,7 @@
       // ---- Main render loop ----
 
       function render(now) {
+        requestAnimationFrame(render);
         const elapsed = now - startTime;
         const totalCycle = ERA_DURATION * eras.length;
         const cyclePos = elapsed % totalCycle;
@@ -888,7 +898,6 @@
         }
 
         ctx.globalAlpha = 1;
-        requestAnimationFrame(render);
       }
 
       requestAnimationFrame(render);
